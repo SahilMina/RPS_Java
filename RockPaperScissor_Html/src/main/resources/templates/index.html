@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+        .score {
+            text-align: center;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            min-width: 120px;
+        }
+        .score-label {
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .choice-btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background-color: #1e3c72;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .choice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-color: #2a5298;
+        }
+        .choice-btn .emoji {
+            font-size: 2rem;
+        }
+        .result {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        .result p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+        .result .final-result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-top: 1rem;
+        }
+        .reset-btn {
+            display: block;
+            margin: 2rem auto 0;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #dc3545;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .reset-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        
+        <div class="score-board">
+            <div class="score">
+                <div class="score-label">Player</div>
+                <div class="score-value" th:text="${game.playerScore}">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">Computer</div>
+                <div class="score-value" th:text="${game.computerScore}">0</div>
+            </div>
+        </div>
+
+        <form action="/play" method="post" class="choices">
+            <button type="submit" name="choice" value="ROCK" class="choice-btn">
+                <span class="emoji">✊</span>
+                <span>Rock</span>
+            </button>
+            <button type="submit" name="choice" value="PAPER" class="choice-btn">
+                <span class="emoji">✋</span>
+                <span>Paper</span>
+            </button>
+            <button type="submit" name="choice" value="SCISSORS" class="choice-btn">
+                <span class="emoji">✌️</span>
+                <span>Scissors</span>
+            </button>
+        </form>
+
+        <div th:if="${game.result}" class="result">
+            <p>Your choice: <strong th:text="${game.playerChoice}"></strong></p>
+            <p>Computer's choice: <strong th:text="${game.computerChoice}"></strong></p>
+            <p class="final-result" th:text="${game.result}"></p>
+        </div>
+
+        <form action="/reset" method="post">
+            <button type="submit" class="reset-btn">Reset Game</button>
+        </form>
+    </div>
+</body>
+</html> 
